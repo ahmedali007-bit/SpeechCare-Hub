@@ -1,0 +1,413 @@
+{% extends "patient/patient_base.html" %}
+
+{% block title %}Sessions{% endblock %}
+
+{% block content %}
+{% block extra_css %}
+<style>
+  .btn-sm i {
+    font-size: 1rem;
+    margin: 3px;
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .rounded-circle {
+    object-fit: cover;
+  }
+
+  .modal-content {
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .modal-header {
+    font-size: 1.25rem;
+    padding-bottom: 15px;
+  }
+
+  .form-select, .form-control {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .btn-success {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+
+  .modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .select-option {
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .date-selection {
+    display: flex;
+    gap: 20px; 
+    justify-content: space-between;
+  }
+
+  .select-option {
+    flex: 1; 
+  }
+</style>
+{% endblock %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- App hero header starts -->
+<div class="app-hero-header d-flex align-items-center">
+  <!-- Breadcrumb starts -->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">
+      Therapy Sessions
+    </li>
+  </ol>
+  <!-- Breadcrumb ends -->
+</div>
+<!-- App body starts -->
+<div class="app-body">
+  <!-- Row starts -->
+  <div class="row gx-3">
+    <div class="col-sm-12 col-12">
+      <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4>Therapy Sessions</h4>
+          <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#scheduleSessionModal">
+            + Schedule New Session
+          </button>
+        </div>
+        <div class="card-body p-4">
+          <!-- Session Information Table -->
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>S NO.</th>
+                <th>Session Date</th>
+                <th>Therapist</th>
+                <th>Session Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example session rows -->
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2025-01-05</td>
+                <td>
+                  <img src="therapist1.jpg" alt="Therapist" class="rounded-circle me-2" width="30">
+                  John Doe
+                </td>
+                <td>
+                  <span class="badge bg-info text-dark">Speech Therapy</span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Scheduled</span>
+                </td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" title="View Session Details">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Reschedule">
+                    <i class="bi bi-calendar"></i>
+                  </button>
+                </td>
+              </tr>
+              <!-- Add more rows dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Row ends -->
+
+  <!-- Schedule Session Modal -->
+  <div class="modal fade" id="scheduleSessionModal" tabindex="-1" aria-labelledby="scheduleSessionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="scheduleSessionModalLabel">Schedule a New Session</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="scheduleSessionForm">
+            <!-- Date Selection in one line -->
+            <div class="date-selection">
+              <div class="select-option">
+                <label for="sessionYear" class="form-label">Select Year</label>
+                <select class="form-select" id="sessionYear" required>
+                  <option value="">Year</option>
+                  <!-- Dynamically populate years (Current year) -->
+                </select>
+              </div>
+
+              <div class="select-option">
+                <label for="sessionMonth" class="form-label">Select Month</label>
+                <select class="form-select" id="sessionMonth" required>
+                  <option value="">Month</option>
+                  <!-- Dynamically populate months -->
+                </select>
+              </div>
+
+              <div class="select-option">
+                <label for="sessionDay" class="form-label">Select Day</label>
+                <select class="form-select" id="sessionDay" required>
+                  <option value="">Day</option>
+                  <!-- Dynamically populate days based on selected month/year -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Time Selection -->
+            <div class="select-option">
+              <label for="sessionTime" class="form-label">Select Time</label>
+              <select class="form-select" id="sessionTime" required>
+                <option value="">Select Time</option>
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="01:00">01:00 PM</option>
+                <option value="02:00">02:00 PM</option>
+                <option value="03:00">03:00 PM</option>
+                <!-- Add more times dynamically -->
+              </select>
+            </div>
+
+            <!-- Therapist Selection -->
+            <div class="select-option">
+              <label for="therapist" class="form-label">Select Therapist</label>
+              <select class="form-select" id="therapist" required>
+                <option value="">Select Therapist</option>
+                <option value="therapist1">John Doe</option>
+                <option value="therapist2">Jane Smith</option>
+                <!-- Add more therapists dynamically -->
+              </select>
+            </div>
+
+            <!-- Session Type Selection -->
+            <div class="select-option">
+              <label for="sessionType" class="form-label">Session Type</label>
+              <select class="form-select" id="sessionType" required>
+                <option value="Speech Therapy">Speech Therapy</option>
+                <option value="Occupational Therapy">Occupational Therapy</option>
+                <option value="Physical Therapy">Physical Therapy</option>
+              </select>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="select-option">
+              <label for="notes" class="form-label">Additional Notes</label>
+              <textarea class="form-control" id="notes" rows="3" placeholder="Add any notes..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Confirm Schedule</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- App body ends -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get today's date
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); // 0-indexed (0 = January, 11 = December)
+    const maxDate = new Date(today);
+    maxDate.setMonth(currentMonth + 1);
+
+    // Populate Year dropdown
+    const yearSelect = document.getElementById("sessionYear");
+    for (let year = currentYear; year <= currentYear + 1; year++) {
+      let option = document.createElement("option");
+      option.value = year;
+      option.textContent = year;
+      yearSelect.appendChild(option);
+    }
+
+    // Populate Month dropdown
+    const monthSelect = document.getElementById("sessionMonth");
+    for (let i = 0; i < 12; i++) {
+      let option = document.createElement("option");
+      option.value = i;
+      option.textContent = new Date(0, i).toLocaleString('default', { month: 'long' });
+      monthSelect.appendChild(option);
+    }
+
+    // Handle Month change to update Day options
+    monthSelect.addEventListener("change", function () {
+      const year = parseInt(yearSelect.value);
+      const month = parseInt(this.value);
+      populateDays(year, month);
+    });
+
+    // Populate Days based on selected Month and Year
+    function populateDays(year, month) {
+      const daySelect = document.getElementById("sessionDay");
+      daySelect.innerHTML = "<option value=''>Day</option>"; // Reset Day options
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate(); // Get number of days in the selected month
+      for (let day = 1; day <= daysInMonth; day++) {
+        let option = document.createElement("option");
+        option.value = day;
+        option.textContent = day;
+        daySelect.appendChild(option);
+      }
+    }
+
+    // Set max date to be 1 month from today for validation
+    const maxDateStr = maxDate.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    document.getElementById("sessionDate").setAttribute("max", maxDateStr);
+  });
+</script>
+{% endblock %}
+</body>
+</html>

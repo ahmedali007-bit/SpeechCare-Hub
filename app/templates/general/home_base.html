@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Home Page{% endblock %}</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo-modified.png') }}" />
+
+  <!-- CSS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+  <!-- Page wrapper starts -->
+  <div class="page-wrapper">
+
+    <!-- App header starts -->
+    <div class="app-header d-flex align-items-center">
+      <!-- Toggle buttons -->
+      <div class="d-flex">
+        <button class="toggle-sidebar"><i class="ri-menu-line"></i></button>
+        <button class="pin-sidebar"><i class="ri-menu-line"></i></button>
+      </div>
+      <!-- App brand -->
+      <div class="app-brand ms-3">
+        <a href="{{ url_for('general.home') }}" class="d-lg-block d-none">
+          <img src="{{ url_for('static', filename='images/logo1.png') }}" class="logo" alt="Medicare Admin Template">
+        </a>
+      </div>
+    </div>
+    <!-- App header ends -->
+
+    <!-- Main container -->
+    <div class="main-container">
+      <!-- Sidebar -->
+      <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-profile">
+          <img src="{{ url_for('static', filename='images/logo1.png') }}" class="img-shadow img-3x me-3 rounded-5"
+            alt="Hospital Admin Templates">
+          <div>
+            <h5 class="profile-name">SpeechCare Hub</h5>
+            <p class="small profile-name">"Empowering Voices</p>
+          </div>
+        </div>
+        <ul class="sidebar-menu">
+          <li class="{% if active_page == 'home' %}active current-page{% endif %}"><a href="{{ url_for('general.home') }}" class="sidebar-link"><i class="ri-home-8-line"></i>Home</a></li>
+          <li class="{% if active_page == 'login' %}active current-page{% endif %}"><a href="{{ url_for('auth.login') }}" class="sidebar-link"><i class="ri-login-box-line"></i>Login</a></li>
+          <li class="{% if active_page == 'sign_up' %}active current-page{% endif %}"><a href="{{ url_for('auth.sign_up') }}" class="sidebar-link"><i class="ri-user-add-line"></i>Sign Up</a></li>
+          <li class="{% if active_page == 'contact' %}active current-page{% endif %}"><a href="{{ url_for('general.contact') }}" class="sidebar-link"><i class="ri-mail-send-line"></i>Contact</a></li>
+          <li class="{% if active_page == 'about' %}active current-page{% endif %}"><a href="{{url_for('general.about')}}" class="sidebar-link"><i class="ri-information-line"></i>About Us</a></li>
+        </ul>
+              
+      </nav>
+      <!-- Sidebar ends -->
+
+      <!-- Page-specific content -->
+      <div class="app-container">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='javascript/dashboard.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="app-hero-header d-flex align-items-center">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">Admin Dashboard</li>
+  </ol>
+</div>
+
+<div class="app-body">
+
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-xxl-12 col-sm-12">
+        <div class="card mb-3 bg-primary">
+          <div class="card-body">
+            <div class="py-4 px-3 text-white">
+              <h6>Good Morning,</h6>
+              <h2>Mr. Ahmed Ali</h2>
+              <div class="mt-4 d-flex gap-3">
+                <div class="d-flex align-items-center">
+                  <div class="icon-box lg bg-arctic rounded-3 me-3">
+                    <i class="ri-surgical-mask-line fs-4"></i>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h2 class="m-0 lh-1">9</h2>
+                    <p class="m-0">Active Therapists</p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="icon-box lg bg-lime rounded-3 me-3">
+                    <i class="ri-lungs-line fs-4"></i>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h2 class="m-0 lh-1">3</h2>
+                    <p class="m-0">Today Sessions</p>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="icon-box lg bg-peach rounded-3 me-3">
+                    <i class="ri-walk-line fs-4"></i>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <h2 class="m-0 lh-1">2</h2>
+                    <p class="m-0">New Patients</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="p-2 border border-success rounded-circle me-3">
+                <div class="icon-box md bg-success-subtle rounded-5">
+                  <i class="ri-user-add-line text-success fs-4"></i>
+                </div>
+              </div>
+              <div class="d-flex flex-column">
+                <h2 class="lh-1">890</h2>
+                <p class="m-0">Total Patients</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-1">
+              <a class="text-success" href="javascript:void(0);">
+                <span>View All</span>
+                <i class="ri-arrow-right-line text-success ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="p-2 border border-primary rounded-circle me-3">
+                <div class="icon-box md bg-info-subtle rounded-5">
+                  <i class="ri-user-add-line text-primary fs-4"></i>
+                </div>
+              </div>
+              <div class="d-flex flex-column">
+                <h2 class="lh-1">360</h2>
+                <p class="m-0">Total Therapists</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-1">
+              <a class="text-info" href="javascript:void(0);">
+                <span>View All</span>
+                <i class="ri-arrow-right-line ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="p-2 border border-danger rounded-circle me-3">
+                <div class="icon-box md bg-danger-subtle rounded-5">
+                  <i class="ri-calendar-line text-danger fs-4"></i>
+                </div>
+              </div>
+              <div class="d-flex flex-column">
+                <h2 class="lh-1">980</h2>
+                <p class="m-0">Total Appointments</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-1">
+              <a class="text-danger" href="javascript:void(0);">
+                <span>View All</span>
+                <i class="ri-arrow-right-line ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-user-line fs-4 lh-1"></i>
+              </div>
+              <h6>Patient-Male</h6>
+              <h2 class="text-primary m-0">639</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-user-line fs-4 lh-1"></i>
+              </div>
+              <h6>Patient-Female</h6>
+              <h2 class="text-primary m-0">83</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-psychotherapy-line fs-4 lh-1"></i>
+              </div>
+              <h6>Therapist-Male</h6>
+              <h2 class="text-primary m-0">296</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-psychotherapy-line fs-4 lh-1"></i>
+              </div>
+              <h6>Therapist-Female</h6>
+              <h2 class="text-primary m-0">49</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-thumb-up-line fs-4 lh-1"></i>
+              </div>
+              <h6>Appoint-Completed</h6>
+              <h2 class="text-primary m-0">372</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-sm-6 col-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center">
+              <div class="icon-box md rounded-5 bg-primary mb-3">
+                <i class="ri-hourglass-line fs-4 lh-1"></i>
+              </div>
+              <h6>Appoint-Pending</h6>
+              <h2 class="text-primary m-0">253</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+
+    <!-- Row starts -->
+ <!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row gx-3">
+    <!-- Patients Chart -->
+    <div class="col-xxl-6 col-sm-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title fw-600 text-primary">Patients Registration (Weekly)</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="patientsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Therapists Chart -->
+    <div class="col-xxl-6 col-sm-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title text-primary fw-600">Therapists by Designation</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="therapistsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Patients Registration Chart (Weekly)
+    const patientsCtx = document.getElementById('patientsChart').getContext('2d');
+    const patientsChart = new Chart(patientsCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [{
+                label: 'Patients Registered',
+                data: [10, 15, 8, 20, 12, 18, 25], 
+                backgroundColor: 'rgba(18, 172, 142, 0.6)',
+                borderColor: 'rgba(18, 172, 142, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Therapists by Designation Chart
+    const therapistsCtx = document.getElementById('therapistsChart').getContext('2d');
+    const therapistsChart = new Chart(therapistsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Pathologist', 'Linguist', 'Voice Specialist', 'Neurogenic', 'Audiologist'],
+          datasets: [{
+              label: 'Therapists by Designation',
+              data: [10, 15, 8, 20, 12], 
+              backgroundColor: 'rgba(18, 172, 142, 0.6)',
+              borderColor: 'rgba(18, 172, 142, 1)',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+    });
+</script>
+
+    <!-- Row ends -->
+  </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+Flask==2.1.1
+Flask-SQLAlchemy==2.5.1
+Flask-Mail==0.9.1
+Flask-Login==0.6.2
+python-dotenv==0.19.2
+Flask-wtf
+pip install email-validator

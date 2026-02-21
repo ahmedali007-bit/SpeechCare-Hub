@@ -1,0 +1,169 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Edit Patient Profile{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- App hero header starts -->
+<div class="app-hero-header d-flex align-items-center">
+  <!-- Breadcrumb starts -->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="{{ url_for('general.home') }}">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">
+      Edit Patient Profile
+    </li>
+  </ol>
+  <!-- Breadcrumb ends -->
+</div>
+<!-- App Hero header ends -->
+
+<!-- App body starts -->
+<div class="app-body">
+  <div class="row gx-3">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Custom tabs starts -->
+          <div class="custom-tabs-container">
+            <!-- Nav tabs starts -->
+            <ul class="nav nav-tabs" id="customTab2" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab" aria-controls="oneA" aria-selected="true">
+                  <i class="ri-briefcase-4-line"></i> Patient Details
+                </a>
+              </li>
+            </ul>
+            <!-- Nav tabs ends -->
+
+            <!-- Tab content starts -->
+            <div class="tab-content h-300">
+              <div class="tab-pane fade show active" id="oneA" role="tabpanel" aria-labelledby="tab-oneA">
+                <!-- Form to fetch patient details -->
+                <form method="POST" action="{{ url_for('admin.edit_patient') }}">
+                  <div class="row gx-3">
+                    <!-- Input for Patient ID -->
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="patient_id">Patient ID <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-user-line"></i></span>
+                          <input type="number" class="form-control" id="patient_id" name="patient_id" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fetch Button -->
+                  <div class="d-flex gap-2 justify-content-end mt-3">
+                    <button type="submit" class="btn btn-primary">Fetch Patient Details</button>
+                  </div>
+                </form>
+
+                <!-- Display Patient Details Form -->
+                <form method="POST" action="{{ url_for('admin.update_patient', patient_id=patient.id if patient else 0) }}">
+                  <div class="row gx-3">
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="first_name">First Name <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-account-circle-line"></i></span>
+                          <input type="text" class="form-control" id="first_name" name="first_name" value="{{ patient.first_name if patient else '' }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-account-circle-line"></i></span>
+                          <input type="text" class="form-control" id="last_name" name="last_name" value="{{ patient.last_name if patient else '' }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="age">Age <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-user-line"></i></span>
+                          <input type="number" class="form-control" id="age" name="age" value="{{ patient.age if patient else '' }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label">Gender <span class="text-danger">*</span></label>
+                        <div class="m-0">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="selectGender1" value="male" {% if patient and patient.gender == 'male' %}checked{% endif %}>
+                            <label class="form-check-label" for="selectGender1">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="selectGender2" value="female" {% if patient and patient.gender == 'female' %}checked{% endif %}>
+                            <label class="form-check-label" for="selectGender2">Female</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="phone_number">Phone Number <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-phone-line"></i></span>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ patient.phone_number if patient else '' }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="state">State</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-map-pin-line"></i></span>
+                          <input type="text" class="form-control" id="state" name="state" value="{{ patient.state if patient else '' }}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-4 col-sm-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="city">City</label>
+                        <div class="input-group">
+                          <span class="input-group-text"><i class="ri-map-pin-line"></i></span>
+                          <input type="text" class="form-control" id="city" name="city" value="{{ patient.city if patient else '' }}">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Row ends -->
+
+                  <!-- Form actions -->
+                  <div class="d-flex gap-2 justify-content-end mt-3">
+                    <a href="{{ url_for('admin.edit_patient') }}" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Update Patient Profile</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Tab content ends -->
+          </div>
+          <!-- Custom tabs ends -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- App body ends -->
+{% endblock %}

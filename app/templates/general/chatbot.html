@@ -1,0 +1,188 @@
+{% extends "patient/patient_base.html" %}
+
+{% block title %}AI Therapist{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="app-hero-header d-flex align-items-center">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="{{ url_for('general.home') }}">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">AI Therapist</li>
+  </ol>
+</div>
+
+<div class="app-body">
+  <div class="card chatbot-container shadow-lg rounded-4">
+    <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">AI Therapist Chatbot</h4>
+      <span class="badge bg-success">Online</span>
+    </div>
+    <div class="card-body p-4 position-relative">
+      <!-- Chatbox -->
+      <div id="chatbox" class="chatbox bg-light rounded-4 p-3 shadow-sm" style="height: 450px; overflow-y: auto;">
+        <div id="chatContent" class="chat-content">
+          <!-- Bot initial message -->
+          <div class="chat-message bot d-flex mb-4 fade-in">
+            <div class="avatar me-3">
+              <img src="{{url_for('static',filename='images/doctor-1.jpg')}}" alt="Bot Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+            </div>
+            <div class="message bg-primary text-black p-3 rounded-3 shadow-sm">
+              Hello! How can I assist you today?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input mt-4 d-flex align-items-center position-sticky bottom-0 bg-light py-3 px-3">
+        <input type="text" id="userInput" class="form-control rounded-pill shadow-sm px-4" placeholder="Type your message..." autofocus>
+        <button id="sendBtn" class="btn btn-primary rounded-pill ms-3 px-4">
+          <i class="bi bi-send"></i>
+        </button>
+        <button id="uploadBtn" class="btn btn-secondary rounded-pill ms-3 px-4">
+          <i class="bi bi-paperclip"></i>
+        </button>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="chat-options mt-5 text-center">
+        <h5 class="text-primary mb-3">Quick Actions</h5>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <button id="scheduleSession" class="btn btn-outline-primary rounded-pill px-4 py-2 action-btn">
+            <i class="bi bi-calendar2-plus me-2"></i>Schedule a Session
+          </button>
+          <button id="viewTherapyPlan" class="btn btn-outline-primary rounded-pill px-4 py-2 action-btn">
+            <i class="bi bi-journal-text me-2"></i>View Therapy Plan
+          </button>
+          <button id="contactTherapist" class="btn btn-outline-primary rounded-pill px-4 py-2 action-btn">
+            <i class="bi bi-person-lines-fill me-2"></i>Contact Therapist
+          </button>
+          <button id="viewProgress" class="btn btn-outline-primary rounded-pill px-4 py-2 action-btn">
+            <i class="bi bi-graph-up me-2"></i>My Progress
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const sendBtn = document.getElementById('sendBtn');
+  const userInput = document.getElementById('userInput');
+  const chatContent = document.getElementById('chatContent');
+  const uploadBtn = document.getElementById('uploadBtn');
+
+  function appendMessage(sender, message, isFile = false) {
+    const isUser = sender === 'user';
+    const avatar = isUser ? "/static/images/doctor-2.jpg" : "/static/images/doctor-1.jpg";
+    const messageHtml = `
+      <div class="chat-message ${sender} d-flex ${isUser ? 'justify-content-end' : 'mb-4'} fade-in">
+        ${!isUser ? `<div class="avatar me-3">
+          <img src="${avatar}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+        </div>` : ''}
+        <div class="message ${isUser ? 'bg-light border text-black' : 'bg-primary text-black'} p-3 rounded-3 shadow-sm">
+          ${isFile ? `<a href="${message}" download>Download File</a>` : message}
+        </div>
+        ${isUser ? `<div class="avatar ms-3">
+          <img src="${avatar}" alt="Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+        </div>` : ''}
+      </div>`;
+    chatContent.innerHTML += messageHtml;
+    chatContent.scrollTop = chatContent.scrollHeight;
+  }
+
+  sendBtn.addEventListener('click', function () {
+    const message = userInput.value.trim();
+    if (message) {
+      appendMessage('user', message);
+      userInput.value = '';
+
+      setTimeout(() => {
+        appendMessage('bot', "I'm here to help! What do you need assistance with?");
+      }, 1000);
+    }
+  });
+
+  userInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+
+  uploadBtn.addEventListener('click', function () {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '*';
+    fileInput.click();
+    fileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const fileURL = URL.createObjectURL(file);
+        appendMessage('user', fileURL, true);
+
+        setTimeout(() => {
+          appendMessage('bot', "Thanks for sharing! I'll process this and get back to you shortly.");
+        }, 1000);
+      }
+    };
+  });
+
+  document.getElementById('scheduleSession').addEventListener('click', function () {
+    appendMessage('bot', "Scheduling a session for you... Please wait!");
+  });
+
+  document.getElementById('viewTherapyPlan').addEventListener('click', function () {
+    appendMessage('bot', "Fetching your therapy plan... Please wait!");
+  });
+
+  document.getElementById('contactTherapist').addEventListener('click', function () {
+    appendMessage('bot', "Connecting you to your therapist... Please wait!");
+  });
+
+  document.getElementById('viewProgress').addEventListener('click', function () {
+    appendMessage('bot', "Loading your progress... Please wait!");
+  });
+
+  const chatbox = document.getElementById('chatbox');
+  chatbox.style.backgroundImage = 'linear-gradient(to bottom right, #f8f9fa, #e9ecef)';
+  chatbox.style.border = '1px solid #dee2e6';
+
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .action-btn:hover {
+      background-color: #0d6efd !important;
+      color: white !important;
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+{% endblock %}

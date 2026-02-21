@@ -1,0 +1,117 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Therapist List{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="app-hero-header d-flex align-items-center">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="{{ url_for('general.home') }}">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">Therapist List</li>
+  </ol>
+</div>
+
+<div class="app-body">
+  <!-- Row starts -->
+  <div class="row gx-3">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="card-title">Therapist List</h5>
+          <a href="{{ url_for('admin.add_therapist') }}" class="btn btn-primary ms-auto">Add Therapist</a>
+        </div>
+        <div class="card-body">
+          <!-- Debugging: Check if therapists are passed -->
+          {% if therapists %}
+            <p>Number of therapists: {{ therapists|length }}</p>
+          {% else %}
+            <p>No therapists found.</p>
+          {% endif %}
+
+          <!-- Table starts -->
+          <div class="table-responsive">
+            <table id="therapistTable" class="table truncate m-0 align-middle">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                  <th>Designation</th>
+                  <th>Phone Number</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for therapist in therapists %}
+                <tr>
+                  <td>{{ therapist.id }}</td>
+                  <td>{{ therapist.first_name }} {{ therapist.last_name }}</td>
+                  <td>{{ therapist.age }}</td>
+                  <td>{{ therapist.gender }}</td>
+                  <td>{{ therapist.city }}, {{ therapist.state }}</td>
+                  <td>{{ therapist.designation }}</td>
+                  <td>{{ therapist.phone_number }}</td>
+                  <td>
+                    <div class="d-inline-flex gap-1">
+                      <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delRow{{ therapist.id }}">
+                        <i class="ri-delete-bin-line"></i>
+                      </button>
+                      <a href="{{ url_for('admin.edit_therapist', therapist_id=therapist.id) }}" class="btn btn-outline-success btn-sm">
+                        <i class="ri-edit-box-line"></i>
+                      </a>
+                      <a href="#" class="btn btn-outline-info btn-sm">
+                        <i class="ri-eye-line"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Delete Modal for each therapist -->
+                <div class="modal fade" id="delRow{{ therapist.id }}" tabindex="-1" aria-labelledby="delRowLabel{{ therapist.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="delRowLabel{{ therapist.id }}">Confirm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete the therapist from the list?
+                      </div>
+                      <div class="modal-footer">
+                        <div class="d-flex justify-content-end gap-2">
+                          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">No</button>
+                          <a href="{{ url_for('therapist.delete_therapist', therapist_id=therapist.id) }}" class="btn btn-danger">Yes</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- Table ends -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Row ends -->
+</div>
+{% endblock %}

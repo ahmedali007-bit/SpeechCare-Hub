@@ -1,0 +1,169 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Add Therapist{% endblock %}
+
+{% block content %}
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- App hero header starts -->
+<div class="app-hero-header d-flex align-items-center">
+  <!-- Breadcrumb starts -->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+      <a href="index.html">Home</a>
+    </li>
+    <li class="breadcrumb-item text-primary" aria-current="page">
+      Add Therapist Profile
+    </li>
+  </ol>
+  <!-- Breadcrumb ends -->
+</div>
+<!-- App Hero header ends -->
+
+<!-- App body starts -->
+<div class="app-body">
+  <div class="row gx-3">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center mb-3">Create Therapist Profile</h3>
+          <form method="POST" action="{{ url_for('admin.add_therapist') }}">
+            <!-- Personal Details -->
+            <div class="row gx-3">
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">First Name <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-account-circle-line"></i></span>
+                    <input type="text" class="form-control" name="first_name" placeholder="Enter First Name" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-account-circle-line"></i></span>
+                    <input type="text" class="form-control" name="last_name" placeholder="Enter Last Name" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Age <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-user-line"></i></span>
+                    <input type="number" class="form-control" name="age" placeholder="Enter Your Age" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Gender <span class="text-danger">*</span></label>
+                  <div class="m-0">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="gender" value="male" required>
+                      <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="gender" value="female">
+                      <label class="form-check-label">Female</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Email ID <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-mail-open-line"></i></span>
+                    <input type="email" class="form-control" name="email" placeholder="Enter Email ID" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-phone-line"></i></span>
+                    <input type="text" class="form-control" name="phone_number" placeholder="Enter Mobile Number" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">State</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-projector-line"></i></span>
+                    <input type="text" class="form-control" name="state" placeholder="Enter Your State">
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">City</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-scan-line"></i></span>
+                    <input type="text" class="form-control" name="city" placeholder="Enter City">
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Designation</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-copper-diamond-line"></i></span>
+                    <select class="form-select" name="designation" required>
+                      <option value="Speech-Language Pathologist (SLP)">Pathologist</option>
+                      <option value="Clinical Linguist">Linguist</option>
+                      <option value="Communication Disorders Specialist">Communication Specialist</option>
+                      <option value="Voice and Swallowing Specialist">Voice and Swallowing Specialist</option>
+                      <option value="Neurogenic Communication Expert">Neurogenic Communication Expert</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Password <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-lock-password-line"></i></span>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-3 col-lg-4 col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="ri-lock-password-line"></i></span>
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end mt-4">
+              <button type="submit" class="btn btn-primary">Create Therapist Profile</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- App body ends -->
+{% endblock %}
